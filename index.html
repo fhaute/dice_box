@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dice roll lab (sandbox)</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: system-ui, sans-serif;
+        background: #0f0f14;
+        color: #e8e8ef;
+      }
+      #ui {
+        position: fixed;
+        left: 12px;
+        top: 12px;
+        max-width: min(420px, 92vw);
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: rgba(20, 20, 28, 0.88);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 13px;
+        line-height: 1.45;
+        pointer-events: none;
+      }
+      #ui kbd {
+        font: inherit;
+        padding: 1px 6px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      #lab-controls {
+        position: fixed;
+        left: 12px;
+        bottom: 12px;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 14px;
+        max-width: min(520px, 94vw);
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: rgba(24, 24, 32, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: 13px;
+        pointer-events: auto;
+      }
+      #lab-controls label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+      }
+      #lab-controls input[type='number'] {
+        width: 3.2rem;
+        padding: 4px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(0, 0, 0, 0.35);
+        color: inherit;
+        font: inherit;
+      }
+      #lab-controls select {
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(0, 0, 0, 0.35);
+        color: inherit;
+        font: inherit;
+      }
+      #lab-controls button {
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 200, 120, 0.35);
+        background: rgba(90, 60, 30, 0.55);
+        color: #f5e6d0;
+        font: inherit;
+        cursor: pointer;
+      }
+      #lab-controls button:hover {
+        background: rgba(110, 75, 40, 0.65);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="ui">
+      <strong>Dice roll lab</strong> — isolated from the SPA. Fixed XZ play pen (wireframe box), convex vertex floor
+      contact, soft die–die bumps. <strong>Apply &amp; re-roll</strong> also runs a short scripted box shake (like
+      rattling a lid in 3D: up/down and sideways). Short <kbd>click</kbd> on empty canvas (outside the panel) or
+      <kbd>Space</kbd> to re-roll only. Use
+      the panel for
+      dice count, facets per die, and gravity (m/s²; live while you drag the slider). Non–d6 solids use the same style
+      of canvas face textures (lab value order on mesh, not casino
+      engraving).<br />
+      HUD: <code>D1:…</code> when all dice have settled.
+    </div>
+    <div id="lab-controls">
+      <label>
+        Dice
+        <input id="dice-count" type="number" min="1" max="12" value="1" />
+      </label>
+      <label>
+        Facets / die
+        <select id="facets-per-die">
+          <option value="4">4 (d4)</option>
+          <option value="6" selected>6 (d6)</option>
+          <option value="8">8 (d8)</option>
+          <option value="12">12 (d12)</option>
+          <option value="20">20 (d20)</option>
+        </select>
+      </label>
+      <label title="Downward acceleration (m/s²)">
+        g
+        <input id="lab-gravity" type="number" min="4" max="80" step="1" value="30" />
+      </label>
+      <button type="button" id="lab-apply">Apply &amp; re-roll</button>
+    </div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
