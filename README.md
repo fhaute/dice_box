@@ -1,8 +1,8 @@
-# Dice box lab (`dice_box/`)
+# Dice box lab
 
-Standalone **Three.js** sandbox: polyhedral dice in a fixed wireframe **play pen**, custom lightweight physics, and a scripted **3D “box shake”** when you use **Apply & re-roll**. No React and no dependency on the main Arcanum SPA — only [three](https://threejs.org/) (via the repo root).
+Standalone **Three.js** sandbox: polyhedral dice in a fixed wireframe **play pen**, custom lightweight physics, and a scripted **3D “box shake”** when you use **Apply & re-roll**. No React — only [three](https://threejs.org/) as a runtime dependency.
 
-Use this folder when you want the **minimal** tree (TypeScript + HTML + README). A sibling folder, **`dice roll/`**, adds legacy prototypes (`Dice Roll.html`, `animations.jsx`).
+The lab is a small **TypeScript + HTML** tree: `index.html` loads `main.ts` as an ES module; you need a dev server that bundles TypeScript and resolves `three` from `node_modules`.
 
 ---
 
@@ -10,9 +10,9 @@ Use this folder when you want the **minimal** tree (TypeScript + HTML + README).
 
 - **1–12 dice**, each **d4 / d6 / d8 / d12 / d20**, with **adjustable gravity** (m/s²).
 - A **fixed XZ pen** (floor + four walls) drawn as a wireframe “box”; dice bounce and slide inside it.
-- **Face readout** on the HUD (`D1:…`) once every die has **settled** (low linear and angular speed held for a short window).
+- **Face readout** on the HUD (`D1:…`) once every die has **settled** (low linear and angular speed held for a short window). Values come from **which face points up** after simulation, not a separate random roll for the number.
 - **Apply & re-roll**: respawns throws **and** runs a short **kinematic shake** of the whole pen in world space (see below).
-- **Re-roll only**: short click on empty canvas or **Space** — new random throws **without** the shake motion.
+- **Re-roll only**: short click on empty canvas or **Space** — new throws **without** the shake motion.
 
 Non-d6 solids use **canvas-drawn numerals** on faces (lab ordering on the mesh), not casino-standard engraving.
 
@@ -59,39 +59,20 @@ Constants at the top of `main.ts` (restitution, friction, topple gains, settle t
 | `boxContact.ts` | World AABB helpers for convex-vertex floor and walls. |
 | `playBounds.ts` | Fixed pen size / placement in XZ so camera and bounds stay consistent. |
 
-Root **`vite.config.ts`** exposes this folder as the **`diceBoxLab`** HTML entry; production build emits **`dist/dice_box/index.html`**.
-
 ---
 
 ## Run locally
 
-From the **repository root** (dependencies are hoisted there):
+From **this directory**, use any bundler that serves `index.html` and transpiles TypeScript. Example with [Vite](https://vitejs.dev/):
 
 ```bash
-npm install
-npm run dev:dice:box
+npm init -y
+npm install three
+npm install -D vite
+npx vite
 ```
 
-Then open **`/dice_box/index.html`** (the script sets the dev shortcut to that path).
-
-Production-style output:
-
-```bash
-npm run build
-```
-
-Artifacts appear under **`dist/dice_box/`**.
-
----
-
-## Relation to `dice roll/`
-
-| | `dice_box/` | `dice roll/` |
-|---|-------------|--------------|
-| **Scope** | Minimal lab only | Same lab **plus** legacy HTML/JSX assets |
-| **Dev script** | `npm run dev:dice:box` | `npm run dev:dice` |
-
-Lab TypeScript may be **duplicated** between the two folders; treat edits as needing a **manual mirror** unless you consolidate to a single source later.
+Open the URL Vite prints (usually `http://localhost:5173`). Adjust `package.json` scripts if you want a permanent `npm run dev` entry.
 
 ---
 
@@ -100,5 +81,3 @@ Lab TypeScript may be **duplicated** between the two folders; treat edits as nee
 - **Toy physics**: tuned for visuals and iteration, not tournament-grade fairness or determinism across platforms.
 - **Die–die** interaction is **sphere-based**, not exact polyhedron contact.
 - **Shake** moves the **pen kinematically**; dice are not rigidly welded to a separate lid mesh.
-
-If this README ships beside the rest of the Arcanum app repo, the main product lives under **`src/`**; this directory is an **optional dev playground** for dice feel and rendering.
