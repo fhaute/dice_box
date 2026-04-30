@@ -586,18 +586,18 @@ function main(): void {
       clearArenaGroup()
       const wx = Math.max(0.08, baseWalls.maxX - baseWalls.minX)
       const wz = Math.max(0.08, baseWalls.maxZ - baseWalls.minZ)
-      const gh = 7.2
+      const side = Math.max(wx, wz)
       const bcx = (baseWalls.minX + baseWalls.maxX) * 0.5
       const bcz = (baseWalls.minZ + baseWalls.maxZ) * 0.5
 
-      const boxGeo = new THREE.BoxGeometry(wx, gh, wz)
+      const boxGeo = new THREE.BoxGeometry(side, side, side)
       const edgesGeo = new THREE.EdgesGeometry(boxGeo, 18)
       boxGeo.dispose()
       const wire = new THREE.LineSegments(
         edgesGeo,
         new THREE.LineBasicMaterial({ color: 0x6c6c92, transparent: true, opacity: 0.42 }),
       )
-      wire.position.set(bcx, gh * 0.5 + 0.02, bcz)
+      wire.position.set(bcx, side * 0.5 + 0.02, bcz)
       arenaGroup.add(wire)
     }
 

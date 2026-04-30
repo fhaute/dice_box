@@ -1,0 +1,27 @@
+{
+  "name": "dice_box",
+  "version": "1.0.0",
+  "description": "Standalone **Three.js** sandbox: polyhedral dice in a fixed wireframe **play pen**, custom lightweight physics, and a scripted **3D “box shake”** when you use **Apply & re-roll**. No React — only [three](https://threejs.org/) as a runtime dependency.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fhaute/dice_box.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/fhaute/dice_box/issues"
+  },
+  "homepage": "https://github.com/fhaute/dice_box#readme",
+  "dependencies": {
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "vite": "^8.0.10"
+  }
+}

@@ -24,21 +24,22 @@ const TMP_DIR = new THREE.Vector3()
 /**
  * Returns XZ bounds (inclusive) for die centers inside a **fixed** arena centered on the origin.
  *
- * Contract: `aspect` is `camera.aspect` (width / height). Slightly oversized pen for “shake the box” play; larger dice
- * shrink the usable strip only via `pad`. If padding inverts an axis, falls back to a thin slab.
+ * Contract: The lab uses a **square** arena in XZ so the wireframe can be a true cube (X = Z = Y). `aspect` is kept
+ * in the signature for API stability but no longer stretches the arena. Larger dice shrink the usable strip only via
+ * `pad`. If padding inverts an axis, falls back to a thin slab.
  */
 export function computeFixedPlayPenBoundsXZ(
   halfExtent: number,
   margin: number,
   aspect: number,
 ): XZCenterBounds {
-  const halfZ = 5.5
-  const halfX = Math.max(6.7, halfZ * Math.max(1, aspect) * 0.96)
+  void aspect
+  const halfSide = 5.8
   const pad = halfExtent + margin
-  let minX = -halfX + pad
-  let maxX = halfX - pad
-  let minZ = -halfZ + pad
-  let maxZ = halfZ - pad
+  let minX = -halfSide + pad
+  let maxX = halfSide - pad
+  let minZ = -halfSide + pad
+  let maxZ = halfSide - pad
   if (minX >= maxX) {
     const c = (minX + maxX) * 0.5
     minX = c - 0.02
